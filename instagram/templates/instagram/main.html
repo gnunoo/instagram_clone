@@ -64,41 +64,41 @@
 
 
 <div style="display: flex; flex-direction: row; text-align: center; justify-content: center; padding-top: 60px; background-color: #FAFAFA;">
-    <!-- 왼쪽(post)   -->
     <div style="width: 500px; min-width: 500px; height: 1000px;  margin-right:300px; ">
-        <div style="border:solid 1px gray; background-color: white; border-radius: 15px;">
-            <div style="display: flex; flex-direction: row; align-items: center; margin: 0 10px;">
-                <div class="box" style="width: 60px; height:60px; ">
-                    <img class="profile" src="https://postfiles.pstatic.net/MjAyMjAyMDZfNTgg/MDAxNjQ0MTI2MDM4MTk3.r1soc9ZvTIRVAB6zc7xnf0HMzMA832cI-JDU8tp0UU4g.ofaOcBwouPrvk-VR4j84JQBVBIe4ejOiC1VLvCOKnGAg.JPEG.jiyun6468/%EB%8B%A4%EC%9A%B4%EB%A1%9C%EB%93%9C%ED%8C%8C%EC%9D%BC%EF%BC%BF20220206%EF%BC%BF143809.jpg?type=w966">
+        <!-- 왼쪽(Feedbox)   -->
+        {% for feed in feed_list %}
+            <div class="Feedbox" style="border:solid 1px gray; background-color: white; border-radius: 15px; margin-top:20px;">
+                <div style="display: flex; flex-direction: row; align-items: center; margin: 0 10px;">
+                    <div class="box" style="width: 60px; height:60px; ">
+                        <img class="profile" src="{{ feed.profile_image }}">
+                    </div>
+                    <div>
+                        {{ feed.user_id }}
+                    </div>
                 </div>
-                <div>
-                    gar_noo
+                <div> <img style="width: 100%" src="{{ feed.Feed_image }}" alt="random_image"> </div>
+                <div style="margin: 0 20px; display: flex; flex-direction: row; justify-content: space-between">
+                    <div >
+                        <span class="material-symbols-outlined">favorite</span>
+                       <span class="material-symbols-outlined">maps_ugc</span>
+                        <span class="material-symbols-outlined">send</span>
+                    </div>
+                    <div>
+                        <span class="material-symbols-outlined">bookmark</span>
+                    </div>
+                </div>
+                <div style="margin: 0 10px; text-align: left; font-size: 14px;">춘식이외 <b>{{ feed.like_count }}명</b>이 좋아합니다.</div>
+                <div style="margin: 0 10px; text-align: left; font-size: 16px;"> <b>gar_noo</b> {{ feed.content }}</div>
+                <div style="margin: 0 10px; text-align: left; font-size: 14px;"> <b>aaaaa</b> comment1..</div>
+                <div style="margin: 0 10px; text-align: left; font-size: 14px;"> <b>bbbbb</b> 댓글 2..</div>
+
+                <div style="border-top: solid 1px gray;  display: flex; flex-direction: row; ">
+                    <span class="material-symbols-outlined"style="margin: 10px 10px;">sentiment_satisfied</span>
+                    <input type="input" name="test" id="input-comment" style="width:400px; box-shadow:none; border:none; outline:none" placeholder="댓글 달기...">
+                    <button type="submit" id="btn-submit" style="background-color:white; border: solid 1px white; color:black; " disabled>게시</button>
                 </div>
             </div>
-            <div> <img style="width: 100%" src="https://picsum.photos/580/300 " alt="random_image"> </div>
-            <div style="margin: 0 20px; display: flex; flex-direction: row; justify-content: space-between">
-                <div >
-                    <span class="material-symbols-outlined">favorite</span>
-                   <span class="material-symbols-outlined">maps_ugc</span>
-                    <span class="material-symbols-outlined">send</span>
-                </div>
-                <div>
-                    <span class="material-symbols-outlined">bookmark</span>
-                </div>
-            </div>
-            <div style="margin: 0 10px; text-align: left; font-size: 14px;">춘식이외 <b>19명</b>이 좋아합니다.</div>
-            <div style="margin: 0 10px; text-align: left; font-size: 16px;"> <b>gar_noo</b> 안녕하세요! 지금 인스타그램 클론코딩 진행중..</div>
-            <div style="margin: 0 10px; text-align: left; font-size: 14px;"> <b>aaaaa</b> comment1..</div>
-            <div style="margin: 0 10px; text-align: left; font-size: 14px;"> <b>bbbbb</b> 댓글 2..</div>
-
-            <div style="border-top: solid 1px gray;  display: flex; flex-direction: row; ">
-                <span class="material-symbols-outlined"style="margin: 10px 10px;">sentiment_satisfied</span>
-                <input type="input" name="test" id="input-comment" style="width:400px; box-shadow:none; border:none; outline:none" placeholder="댓글 달기...">
-                <button type="submit" id="btn-submit" style="background-color:white; border: solid 1px white; color:black; " disabled>게시</button>
-
-
-            </div>
-        </div>
+        {% endfor %}
     </div>
     <!-- 오른쪽(추천인)   -->
     <div style="width: 400px; height: 1000px;  position: fixed; left:62%">
