@@ -4,6 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load static %}
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -14,7 +15,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <title>Instgram</title>
     <!--  jquery  -->
-    <script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+
     <style>
         .box {
             width: 150px;
@@ -59,6 +61,9 @@
     </style>
 
     <script>
+
+    let files;
+
     $(function() {
         $("#input-comment").on("keyup", function() {
             var flag = true;
@@ -76,6 +81,48 @@
                 overflow: 'hidden'
             });
          });
+    });
+
+    <!-- feed_create   -->
+
+    $(function() {
+        $('#feed_create_button').click(function(){
+            window.alert("공유하기 누름"+$('#exampleFormControlTextarea1').val());
+
+            let file=files[0]
+            let image=files[0].name;
+            let content=$('#exampleFormControlTextarea1').val();
+            let user_id="gar_noo";
+            let profile_image="https://postfiles.pstatic.net/MjAyMjAyMDZfNTgg/MDAxNjQ0MTI2MDM4MTk3.r1soc9ZvTIRVAB6zc7xnf0HMzMA832cI-JDU8tp0UU4g.ofaOcBwouPrvk-VR4j84JQBVBIe4ejOiC1VLvCOKnGAg.JPEG.jiyun6468/%EB%8B%A4%EC%9A%B4%EB%A1%9C%EB%93%9C%ED%8C%8C%EC%9D%BC%EF%BC%BF20220206%EF%BC%BF143809.jpg?type=w966";
+
+            let fd=new FormData();
+
+            fd.append('file',file);
+            fd.append('image',image);
+            fd.append('content',content);
+            fd.append('user_id',user_id);
+            fd.append('profile_image',profile_image);
+            fd.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+
+            $.ajax({
+                url: '/content/uploadFeed',
+                data:fd,
+                method:"POST",
+                processData: false,
+                contentType: false,
+                success: function(data){
+                    console.log("성공");
+                },
+                error: function(request, status, error){
+                    console.log("에러");
+                },
+                complete: function(){
+                    console.log("완료");
+                    location.reload('/main');
+                }
+            })
+
+        });
     });
 
     <!--image drag and drop    -->
@@ -109,7 +156,7 @@
         dragOver(e); //1
 
         e.dataTransfer = e.originalEvent.dataTransfer; //2
-        var files = e.target.files || e.dataTransfer.files;
+        files = e.target.files || e.dataTransfer.files;
 
         if (files.length > 1) {
             alert('하나만 올려라.');
@@ -174,7 +221,7 @@
                         {{ feed.user_id }}
                     </div>
                 </div>
-                <div> <img style="width: 100%" src="{{ feed.Feed_image }}" alt="random_image"> </div>
+                <div> <img style="width: 100%" src="{% get_media_prefix %}{{ feed.Feed_image }}" alt="random_image"> </div>
                 <div style="margin: 0 20px; display: flex; flex-direction: row; justify-content: space-between">
                     <div >
                         <span class="material-symbols-outlined">favorite</span>
@@ -356,7 +403,7 @@
             <div class="modal_image_upload" style="width: 500px; height:540px; margin-top:10px;"></div>
             <div>
                 <div > <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"style="width:276px; height:400px;"></textarea> </div>
-                <button type="button" class="btn btn-primary" style="width:100%;"> 공유하기 </button>
+                <button id="feed_create_button" type="button" class="btn btn-primary" style="width:100%;"> 공유하기 </button>
             </div>
 
         </div>

@@ -1,7 +1,9 @@
 from django.contrib import admin
 from django.urls import path
-from . import views
+from .views import Main,UploadFeed
 
 urlpatterns = [
-    path('',views.Main.as_view()),
+    path('', Main.as_view()),
+    # path('content/uploadFeed', UploadFeed.as_view())
 ]
+
