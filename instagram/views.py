@@ -5,14 +5,26 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from main.settings import MEDIA_ROOT
 from .models import Feed
+from user.views import User
 
 class Main(APIView):
     def get(self,request):
         print("get 호출")
+
         feed_list=Feed.objects.all().order_by('-id')
 
+        print("로그인 사용자: ", request.session['email'])
 
-        return render(request,'instagram/main.html',context=dict(feed_list=feed_list))
+        email=request.session['email']
+
+        if email is None:
+            return render(request,"user/login.html")
+        #일치하는 이메일 유저 정보 가져오기(1개)
+        user=User.objects.filter(email=email).first()
+
+        if user is None:
+            return render(request,"user/login.html")
+        return render(request,'instagram/main.html',context=dict(feed_list=feed_list, user=user))
 
 
 

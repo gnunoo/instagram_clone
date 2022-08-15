@@ -22,7 +22,8 @@ from django.conf.urls.static import static
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('main/',include('instagram.urls')),
-    path('content/uploadFeed', UploadFeed.as_view())
+    path('content/uploadFeed', UploadFeed.as_view()),
+    path('user/',include('user.urls')),
 
 ]
 
