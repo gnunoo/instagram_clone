@@ -13,9 +13,8 @@ class Main(APIView):
 
         feed_list=Feed.objects.all().order_by('-id')
 
-        print("로그인 사용자: ", request.session['email'])
 
-        email=request.session['email']
+        email=request.session.get('email',None)
 
         if email is None:
             return render(request,"user/login.html")
