@@ -64,13 +64,7 @@
 
     let files;
 
-    $(function() {
-        $("#input-comment").on("keyup", function() {
-            var flag = true;
-            flag = $(this).val().length > 0 ? false : true;
-            $("#btn-submit").attr("disabled", flag);
-        });
-    });
+
     <!--nav_add_feed-->
     $(function() {
          $("#nav_add_feed").click(function(){
@@ -92,16 +86,13 @@
             let file=files[0]
             let image=files[0].name;
             let content=$('#exampleFormControlTextarea1').val();
-            let user_id="{{ user.nickname }}";
-            let profile_image="{{ user.profile_img }}";
+
 
             let fd=new FormData();
 
             fd.append('file',file);
             fd.append('image',image);
             fd.append('content',content);
-            fd.append('user_id',user_id);
-            fd.append('profile_image',profile_image);
             fd.append('csrfmiddlewaretoken', '{{ csrf_token }}');
 
             $.ajax({
@@ -118,7 +109,7 @@
                 },
                 complete: function(){
                     console.log("완료");
-                    location.reload('main');
+                    location.reload('/main');
                 }
             })
 
@@ -242,12 +233,12 @@
 
 
     <div class="container-fluid" style="justify-content: space-between; flex-wrap:nowrap; min-width:1000px">
-        <a class="navbar-brand" href="main"> <img width="100px"
+        <a class="navbar-brand" href="/main"> <img width="100px"
                                                src="https://w.namu.la/s/c58572316c87bd9073a73d5bea2d61971f3b4db7e88d3816626f0f25348f776f7ae51119bc74b8d8effd9d1f2e689378459d654d9b7f46c1e336d6aa06da4634c2e53cbb4d08cb384f09d7034f9f634756940b735f782b15ad93a7d044a1527a">
         </a>
         <input class="form-control me-2" style="width:300px" type="search" placeholder="Search" aria-label="Search">
         <div style="display:flex;">
-            <a href="main" style="color:black;"><span class="material-icons" style="padding-right:10px;">home</span></a>
+            <a href="/main" style="color:black;"><span class="material-icons" style="padding-right:10px;">home</span></a>
             <span id="nav_add_feed" class="material-symbols-outlined" style="padding-right:10px;" role="button" >add_box</span>
             <div class="dropdown">
                 <a  href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
