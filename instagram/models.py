@@ -7,7 +7,7 @@ class Feed(models.Model):
     content=models.TextField()
     Feed_image=models.TextField()
     email=models.EmailField(default='')
-    like_count=models.IntegerField()
+
 
 
 
